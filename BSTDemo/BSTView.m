@@ -12,10 +12,22 @@
 
 
 @interface BSTView ()
-@property NSMutableArray<ArrayNodeView *> *arrayNodeViews;  // These are in sorted order by value.
+
+/// Elements are in sorted order by value.  Each element's sortIndex is its
+/// index in this array.
+@property NSMutableArray<ArrayNodeView *> *arrayNodeViews;
+
+/// The root of the BST that the BSTView allows the user to construct.
 @property IBOutlet TreeNodeView *rootNodeView;
-@property ArrayNodeView *hoveredArrayNodeView;  // Is set when the mouse hovers over an array node view.
+
+/// Is set when the mouse hovers over an array node view.  Is unset when the
+/// user unhovers.
+@property ArrayNodeView *hoveredArrayNodeView;
+
+/// Is set when the user clicks on a tree node view.  Is unset when the user
+/// clicks directly on the BSTView (not a subview).
 @property TreeNodeView *selectedTreeNodeView;
+
 @end
 
 
