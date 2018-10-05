@@ -26,6 +26,28 @@
 
 @implementation BSTView
 
+- (void)resetWithValues:(NSArray *)values {
+	// Construct self.arrayNodeViews.
+	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
+	[self setSubviews:@[]];
+	self.arrayNodeViews = [NSMutableArray array];
+	for (int i = 0; i < sortedValues.count; i++) {
+		NSInteger value = ((NSNumber *)sortedValues[i]).integerValue;
+		ArrayNodeView *nodeView = [[ArrayNodeView alloc] initWithValue:value sortIndex:i];
+		[self.arrayNodeViews addObject:nodeView];
+		[self addSubview:nodeView];
+	}
+
+	// Start with an empty BST.
+	self.rootNodeView = nil;
+
+	// Lay out all the nodes we just created.
+	[self _doLayout];
+	self.needsDisplay = YES;
+}
+
+#pragma mark - Event handling
+
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	// If there is already a corresponding tree node view, do nothing.
 	if ([self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex]) {
@@ -71,26 +93,6 @@
 
 }
 
-
-- (void)resetWithValues:(NSArray *)values {
-	// Construct self.arrayNodeViews.
-	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
-	[self setSubviews:@[]];
-	self.arrayNodeViews = [NSMutableArray array];
-	for (int i = 0; i < sortedValues.count; i++) {
-		NSInteger value = ((NSNumber *)sortedValues[i]).integerValue;
-		ArrayNodeView *nodeView = [[ArrayNodeView alloc] initWithValue:value sortIndex:i];
-		[self.arrayNodeViews addObject:nodeView];
-		[self addSubview:nodeView];
-	}
-
-	// Start with an empty BST.
-	self.rootNodeView = nil;
-
-	// Lay out all the nodes we just created.
-	[self _doLayout];
-	self.needsDisplay = YES;
-}
 
 #pragma mark - NSView methods
 
