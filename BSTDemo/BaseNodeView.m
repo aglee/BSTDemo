@@ -27,20 +27,23 @@
 	return (BSTView *)self.superview;
 }
 
-
 #pragma mark - NSView methods
 
 - (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
+	[super drawRect:dirtyRect];
 
 	// Draw the border.
 	[NSColor.blackColor set];
 	NSFrameRect(self.bounds);
 
 	// Draw the node value.
+	NSDictionary *attr = @{ NSFontAttributeName: [NSFont fontWithName:@"Courier" size:20.0] };
 	NSString *valueString = [NSString stringWithFormat:@"%ld", self.value];
-	NSRect valueRect = NSInsetRect(self.bounds, 4, 4);
-	[valueString drawInRect:valueRect withAttributes:nil];
+	NSSize stringSize = [valueString sizeWithAttributes:attr];
+	NSRect valueRect = (NSRect) { .origin = NSZeroPoint, .size = stringSize };
+	valueRect.origin.x = floor((NSWidth(self.bounds) - stringSize.width) / 2.0);
+	valueRect.origin.y = floor((NSHeight(self.bounds) - stringSize.height) / 2.0);
+	[valueString drawInRect:valueRect withAttributes:attr];
 }
 
 @end
