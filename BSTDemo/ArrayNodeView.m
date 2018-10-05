@@ -11,19 +11,15 @@
 
 @implementation ArrayNodeView
 
-
-#pragma mark - NSView methods
-
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-}
-
 #pragma mark - NSResponder methods
 
-- (void)mouseDown:(NSEvent *)event {
-	[self.mainView handleClickOnArrayNodeView:self];
+- (void)mouseUp:(NSEvent *)event {
+	NSPoint mousePoint = [self convertPoint:event.locationInWindow fromView:nil];
+	if (NSPointInRect(mousePoint, self.bounds)) {
+		[self.mainView handleClickOnArrayNodeView:self];
+	} else {
+		[super mouseUp:event];
+	}
 }
 
 @end
