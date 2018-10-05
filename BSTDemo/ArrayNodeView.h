@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Used by BSTView to display a node in the sorted-array representation of the
+/// data in a binary search tree.
 @interface ArrayNodeView : BaseNodeView
 
 @end

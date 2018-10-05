@@ -10,6 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// Used by BSTView to display a node within a binary search tree.
 @interface TreeNodeView : BaseNodeView
 
 @property TreeNodeView *left;

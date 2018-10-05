@@ -12,13 +12,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// Base class for views that represent a node in a binary search tree.
+/// Base class used by BSTView to represent a node in a binary search tree.
 @interface BaseNodeView : NSView
 
 /// The owning BSTMainView.
 @property (readonly) BSTView *mainView;
 
-/// Index of this node within the sort order of nodes in self.mainView.
+/// Index of this node within the sort order of nodes in the owning BSTView.
+/// This provides the owning BSTView with a unique identifier it can use to
+/// correlate "tree node views" and the corresponding "array node views".
 @property NSInteger sortIndex;
 
 @property NSInteger value;

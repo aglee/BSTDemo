@@ -13,11 +13,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-/// All-encompassing view that shows BST in both tree form and array form.
+/// Displays a binary search tree in both tree form and array form.
+///
+/// Initially there is no BST, only an array of values in sorted order.  The
+/// user can construct the BST by clicking one value at a time to add, in any
+/// order.
 @interface BSTView : NSView
 
-/// Initializes the data to consist of the numbers in values, with no root node
-/// having been specified.
+/// Initializes the data using the numbers in values.  Resets the BST to nil.
 - (void)setUpWithValues:(NSArray *)values;
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
