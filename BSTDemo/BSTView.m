@@ -26,31 +26,6 @@
 
 @implementation BSTView
 
-//TODO: Check what the rule was for duplicate nodes in a binary search tree.
-
-- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex {
-	return [self _treeNodeViewWithSortIndex:sortIndex startingAt:self.rootNodeView];
-}
-
-- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex startingAt:(TreeNodeView *)nodeView {
-	if (nodeView == nil) {
-		return nil;
-	}
-	if (nodeView.sortIndex == sortIndex) {
-		return nodeView;
-	}
-	TreeNodeView *maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.left];
-	if (maybe) {
-		return maybe;
-	}
-	maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.right];
-	if (maybe) {
-		return maybe;
-	}
-	return nil;
-}
-
-
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	// Case 1: There is no root yet, so make this node the root.
 	if (self.rootNodeView == nil) {
@@ -116,13 +91,65 @@
 		[self addSubview:nodeView];
 	}
 
-	// Start with no rootNodeView.
+	// Start with an empty BST.
 	self.rootNodeView = nil;
 
-	// Position all the nodes we just created.
+	// Lay out all the nodes we just created.
 	[self _doNodeViewLayout];
 	self.needsDisplay = YES;
 }
+
+#pragma mark - NSView methods
+
+- (void)resizeSubviewsWithOldSize:(NSSize)oldSize {
+	[self _doNodeViewLayout];
+}
+
+- (void)drawRect:(NSRect)dirtyRect {
+    [super drawRect:dirtyRect];
+    
+	[self _drawTreeNodeLinesStartingWith:self.rootNodeView depth:0];
+}
+
+#pragma mark - Private methods - drawing
+
+- (void)_drawLineFrom:(NSPoint)startPoint to:(NSPoint)endPoint {
+	// Construct the path.
+	NSBezierPath * path = [NSBezierPath bezierPath];
+	[path moveToPoint:startPoint];
+	[path lineToPoint:endPoint];
+
+	// Draw the path.
+	[path setLineWidth:1];
+	[NSColor.blackColor set];
+	[path stroke];
+}
+
+- (void)_drawTreeNodeLinesStartingWith:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
+	if (treeNodeView == nil) {
+		return;
+	}
+
+	[NSColor.blackColor set];
+	NSRect thisFrame = treeNodeView.frame;
+	NSPoint parentPoint = NSMakePoint(NSMidX(thisFrame), NSMinY(thisFrame));
+
+	if (treeNodeView.left) {
+		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.left depth:(depth + 1)];
+		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
+		[self _drawLineFrom:parentPoint to:childPoint];
+		[self _drawTreeNodeLinesStartingWith:treeNodeView.left depth:(depth + 1)];
+	}
+
+	if (treeNodeView.right) {
+		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.right depth:(depth + 1)];
+		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
+		[self _drawLineFrom:parentPoint to:childPoint];
+		[self _drawTreeNodeLinesStartingWith:treeNodeView.right depth:(depth + 1)];
+	}
+}
+
+#pragma mark - Private methods - layout
 
 - (void)_doNodeViewLayout {
 	// Lay out the array node views.
@@ -176,55 +203,28 @@
 	return nodeFrame;
 }
 
+#pragma mark - Private methods - node views
 
-#pragma mark - NSView methods
-
-- (void)resizeSubviewsWithOldSize:(NSSize)oldSize {
-	[self _doNodeViewLayout];
+- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex {
+	return [self _treeNodeViewWithSortIndex:sortIndex startingAt:self.rootNodeView];
 }
 
-- (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    
-	[self _drawTreeNodeLinesStartingWith:self.rootNodeView depth:0];
-}
-
-- (void)_drawLineFrom:(NSPoint)startPoint to:(NSPoint)endPoint {
-	// Construct the path.
-	NSBezierPath * path = [NSBezierPath bezierPath];
-	[path moveToPoint:startPoint];
-	[path lineToPoint:endPoint];
-
-	// Draw the path.
-	[path setLineWidth:1];
-	[NSColor.blackColor set];
-	[path stroke];
-}
-
-- (void)_drawTreeNodeLinesStartingWith:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
-	if (treeNodeView == nil) {
-		return;
+- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex startingAt:(TreeNodeView *)nodeView {
+	if (nodeView == nil) {
+		return nil;
 	}
-
-	[NSColor.blackColor set];
-	NSRect thisFrame = treeNodeView.frame;
-	NSPoint parentPoint = NSMakePoint(NSMidX(thisFrame), NSMinY(thisFrame));
-
-	if (treeNodeView.left) {
-		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.left depth:(depth + 1)];
-		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
-		[self _drawLineFrom:parentPoint to:childPoint];
-		[self _drawTreeNodeLinesStartingWith:treeNodeView.left depth:(depth + 1)];
+	if (nodeView.sortIndex == sortIndex) {
+		return nodeView;
 	}
-
-	if (treeNodeView.right) {
-		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.right depth:(depth + 1)];
-		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
-		[self _drawLineFrom:parentPoint to:childPoint];
-		[self _drawTreeNodeLinesStartingWith:treeNodeView.right depth:(depth + 1)];
+	TreeNodeView *maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.left];
+	if (maybe) {
+		return maybe;
 	}
+	maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.right];
+	if (maybe) {
+		return maybe;
+	}
+	return nil;
 }
-
-
 
 @end
