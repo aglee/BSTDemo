@@ -8,10 +8,18 @@
 
 #import "BaseNodeView.h"
 
-
 @implementation BaseNodeView
 
+#pragma mark - Init/awake/dealloc
 
+- (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex {
+	self = [super initWithFrame:NSZeroRect];
+	if (self) {
+		self.value = value;
+		self.sortIndex = sortIndex;
+	}
+	return self;
+}
 
 #pragma mark - Getters and setters
 

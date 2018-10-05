@@ -54,9 +54,8 @@
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	// Case 1: There is no root yet, so make this node the root.
 	if (self.rootNodeView == nil) {
-		self.rootNodeView = [[TreeNodeView alloc] init];
-		self.rootNodeView.sortIndex = arrayNodeView.sortIndex;
-		self.rootNodeView.value = arrayNodeView.value;
+		self.rootNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
+													  sortIndex:arrayNodeView.sortIndex];
 		[self addSubview:self.rootNodeView];
 		[self _doNodeViewLayout];
 		return;
@@ -69,9 +68,8 @@
 	}
 
 	// Case 3: There is not yet a corresponding tree node view.  Create one.
-	treeNodeView = [[TreeNodeView alloc] init];
-	treeNodeView.sortIndex = arrayNodeView.sortIndex;
-	treeNodeView.value = arrayNodeView.value;
+	treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
+											 sortIndex:arrayNodeView.sortIndex];
 
 	// Insert the new tree node view into the BST of tree node views.
 	TreeNodeView *currentNodeView = self.rootNodeView;
@@ -112,9 +110,8 @@
 	[self setSubviews:@[]];
 	self.arrayNodeViews = [NSMutableArray array];
 	for (int i = 0; i < sortedValues.count; i++) {
-		ArrayNodeView *nodeView = [[ArrayNodeView alloc] init];
-		nodeView.sortIndex = i;
-		nodeView.value = ((NSNumber *)sortedValues[i]).integerValue;
+		NSInteger value = ((NSNumber *)sortedValues[i]).integerValue;
+		ArrayNodeView *nodeView = [[ArrayNodeView alloc] initWithValue:value sortIndex:i];
 		[self.arrayNodeViews addObject:nodeView];
 		[self addSubview:nodeView];
 	}

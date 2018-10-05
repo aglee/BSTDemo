@@ -18,12 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
 /// The owning BSTMainView.
 @property (readonly) BSTView *mainView;
 
+@property NSInteger value;
+
 /// Index of this node within the sort order of nodes in the owning BSTView.
 /// This provides the owning BSTView with a unique identifier it can use to
 /// correlate "tree node views" and the corresponding "array node views".
 @property NSInteger sortIndex;
 
-@property NSInteger value;
+- (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex;
 
 @end
 
