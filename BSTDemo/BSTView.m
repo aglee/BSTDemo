@@ -104,12 +104,17 @@
 	[NSColor.whiteColor set];
 	NSRectFill(self.bounds);
 
-	[self _drawTreeNodeLinesStartingWith:self.rootNodeView depth:0];
+	// Draw lines connecting parent nodes to child nodes.
+	[self _drawTreeNodeLinesStartingWith:self.rootNodeView];
 }
 
 #pragma mark - Private methods - drawing
 
-- (void)_drawLineFrom:(NSPoint)startPoint to:(NSPoint)endPoint {
+- (void)_drawLineFromBottomOf:(NSView *)upperView toTopOf:(NSView *)lowerView {
+	// Calculate the two points to connect.
+	NSPoint startPoint = NSMakePoint(NSMidX(upperView.frame), NSMinY(upperView.frame));
+	NSPoint endPoint = NSMakePoint(NSMidX(lowerView.frame), NSMaxY(lowerView.frame));
+
 	// Construct the path.
 	NSBezierPath * path = [NSBezierPath bezierPath];
 	[path moveToPoint:startPoint];
@@ -121,27 +126,19 @@
 	[path stroke];
 }
 
-- (void)_drawTreeNodeLinesStartingWith:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
+- (void)_drawTreeNodeLinesStartingWith:(TreeNodeView *)treeNodeView {
 	if (treeNodeView == nil) {
 		return;
 	}
 
 	[NSColor.blackColor set];
-	NSRect thisFrame = treeNodeView.frame;
-	NSPoint parentPoint = NSMakePoint(NSMidX(thisFrame), NSMinY(thisFrame));
-
 	if (treeNodeView.left) {
-		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.left depth:(depth + 1)];
-		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
-		[self _drawLineFrom:parentPoint to:childPoint];
-		[self _drawTreeNodeLinesStartingWith:treeNodeView.left depth:(depth + 1)];
+		[self _drawLineFromBottomOf:treeNodeView toTopOf:treeNodeView.left];
+		[self _drawTreeNodeLinesStartingWith:treeNodeView.left];
 	}
-
 	if (treeNodeView.right) {
-		NSRect childFrame = [self _frameForTreeNodeView:treeNodeView.right depth:(depth + 1)];
-		NSPoint childPoint = NSMakePoint(NSMidX(childFrame), NSMaxY(childFrame));
-		[self _drawLineFrom:parentPoint to:childPoint];
-		[self _drawTreeNodeLinesStartingWith:treeNodeView.right depth:(depth + 1)];
+		[self _drawLineFromBottomOf:treeNodeView toTopOf:treeNodeView.right];
+		[self _drawTreeNodeLinesStartingWith:treeNodeView.right];
 	}
 }
 
