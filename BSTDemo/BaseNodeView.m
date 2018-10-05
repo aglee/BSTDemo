@@ -1,23 +1,23 @@
 //
-//  BSTNodeView.m
+//  BaseNodeView.m
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
 //  Copyright © 2018 Andy Lee. All rights reserved.
 //
 
-#import "BSTNodeView.h"
+#import "BaseNodeView.h"
 #import "BSTNode.h"
 
 
-@implementation BSTNodeView
+@implementation BaseNodeView
 
 
 
 #pragma mark - Getters and setters
 
-- (BSTMainView *)mainView {
-	return (BSTMainView *)self.superview;
+- (BSTView *)mainView {
+	return (BSTView *)self.superview;
 }
 
 
@@ -26,12 +26,14 @@
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
 
+	// Draw the border.
+	[NSColor.blackColor set];
+	NSFrameRect(self.bounds);
+
+	// Draw the node value.
 	NSString *valueString = [NSString stringWithFormat:@"%ld", self.node.value];
 	NSRect valueRect = NSInsetRect(self.bounds, 4, 4);
 	[valueString drawInRect:valueRect withAttributes:nil];
-
-	[NSColor.blackColor set];
-	NSFrameRect(self.bounds);
 }
 
 @end

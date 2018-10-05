@@ -1,5 +1,5 @@
 //
-//  BSTMainView.h
+//  BSTView.h
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
@@ -8,21 +8,21 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class BSTArrayNodeView;
-@class BSTTreeNodeView;
+@class ArrayNodeView;
+@class TreeNodeView;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// All-encompassing view that shows BST in both tree form and array form.
-@interface BSTMainView : NSView
+@interface BSTView : NSView
 
 /// Initializes the data to consist of the numbers in values, with no root node
 /// having been specified.
 - (void)setUpWithValues:(NSArray *)values;
 
 
-- (void)handleClickOnArrayNodeView:(BSTArrayNodeView *)nodeView;
-- (void)handleClickOnTreeNodeView:(BSTTreeNodeView *)nodeView;
+- (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
+- (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView;
 
 
 @end

@@ -1,19 +1,19 @@
 //
-//  BSTTreeNodeView.h
+//  TreeNodeView.h
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
 //  Copyright © 2018 Andy Lee. All rights reserved.
 //
 
-#import "BSTNodeView.h"
+#import "BaseNodeView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface BSTTreeNodeView : BSTNodeView
+@interface TreeNodeView : BaseNodeView
 
-@property BSTTreeNodeView *left;
-@property BSTTreeNodeView *right;
+@property TreeNodeView *left;
+@property TreeNodeView *right;
 
 @end
 

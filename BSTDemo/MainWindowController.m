@@ -7,11 +7,11 @@
 //
 
 #import "MainWindowController.h"
-#import "BSTMainView.h"
+#import "BSTView.h"
 
 @interface MainWindowController ()
 
-@property IBOutlet BSTMainView *mainView;
+@property IBOutlet BSTView *mainView;
 
 @end
 

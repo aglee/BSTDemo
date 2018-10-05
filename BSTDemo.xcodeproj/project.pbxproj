@@ -17,14 +17,14 @@
 		73C9287C21668B6D006980B8 /* MainWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9287921668B6D006980B8 /* MainWindowController.m */; };
 		73C9287D21668B6D006980B8 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C9287A21668B6D006980B8 /* MainWindowController.xib */; };
 		73C9287E21668B6D006980B8 /* MainWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 73C9287A21668B6D006980B8 /* MainWindowController.xib */; };
-		73C9288121668E14006980B8 /* BSTMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288021668E14006980B8 /* BSTMainView.m */; };
-		73C9288221668E14006980B8 /* BSTMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288021668E14006980B8 /* BSTMainView.m */; };
-		73C9288521668E64006980B8 /* BSTNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288421668E64006980B8 /* BSTNodeView.m */; };
-		73C9288621668E64006980B8 /* BSTNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288421668E64006980B8 /* BSTNodeView.m */; };
-		73C9288921668E8D006980B8 /* BSTArrayNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288821668E8D006980B8 /* BSTArrayNodeView.m */; };
-		73C9288A21668E8D006980B8 /* BSTArrayNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288821668E8D006980B8 /* BSTArrayNodeView.m */; };
-		73C9288D21668E98006980B8 /* BSTTreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* BSTTreeNodeView.m */; };
-		73C9288E21668E98006980B8 /* BSTTreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* BSTTreeNodeView.m */; };
+		73C9288121668E14006980B8 /* BSTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288021668E14006980B8 /* BSTView.m */; };
+		73C9288221668E14006980B8 /* BSTView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288021668E14006980B8 /* BSTView.m */; };
+		73C9288521668E64006980B8 /* BaseNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288421668E64006980B8 /* BaseNodeView.m */; };
+		73C9288621668E64006980B8 /* BaseNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288421668E64006980B8 /* BaseNodeView.m */; };
+		73C9288921668E8D006980B8 /* ArrayNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288821668E8D006980B8 /* ArrayNodeView.m */; };
+		73C9288A21668E8D006980B8 /* ArrayNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288821668E8D006980B8 /* ArrayNodeView.m */; };
+		73C9288D21668E98006980B8 /* TreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* TreeNodeView.m */; };
+		73C9288E21668E98006980B8 /* TreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* TreeNodeView.m */; };
 		73C928912166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
 		73C928922166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
 		73C928932166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
@@ -65,14 +65,14 @@
 		73C9287821668B6D006980B8 /* MainWindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainWindowController.h; sourceTree = "<group>"; };
 		73C9287921668B6D006980B8 /* MainWindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainWindowController.m; sourceTree = "<group>"; };
 		73C9287A21668B6D006980B8 /* MainWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindowController.xib; sourceTree = "<group>"; };
-		73C9287F21668E14006980B8 /* BSTMainView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTMainView.h; sourceTree = "<group>"; };
-		73C9288021668E14006980B8 /* BSTMainView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTMainView.m; sourceTree = "<group>"; };
-		73C9288321668E64006980B8 /* BSTNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTNodeView.h; sourceTree = "<group>"; };
-		73C9288421668E64006980B8 /* BSTNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTNodeView.m; sourceTree = "<group>"; };
-		73C9288721668E8D006980B8 /* BSTArrayNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTArrayNodeView.h; sourceTree = "<group>"; };
-		73C9288821668E8D006980B8 /* BSTArrayNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTArrayNodeView.m; sourceTree = "<group>"; };
-		73C9288B21668E98006980B8 /* BSTTreeNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTTreeNodeView.h; sourceTree = "<group>"; };
-		73C9288C21668E98006980B8 /* BSTTreeNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTTreeNodeView.m; sourceTree = "<group>"; };
+		73C9287F21668E14006980B8 /* BSTView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTView.h; sourceTree = "<group>"; };
+		73C9288021668E14006980B8 /* BSTView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTView.m; sourceTree = "<group>"; };
+		73C9288321668E64006980B8 /* BaseNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaseNodeView.h; sourceTree = "<group>"; };
+		73C9288421668E64006980B8 /* BaseNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BaseNodeView.m; sourceTree = "<group>"; };
+		73C9288721668E8D006980B8 /* ArrayNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrayNodeView.h; sourceTree = "<group>"; };
+		73C9288821668E8D006980B8 /* ArrayNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArrayNodeView.m; sourceTree = "<group>"; };
+		73C9288B21668E98006980B8 /* TreeNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNodeView.h; sourceTree = "<group>"; };
+		73C9288C21668E98006980B8 /* TreeNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeView.m; sourceTree = "<group>"; };
 		73C9288F2166958C006980B8 /* BSTNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTNode.h; sourceTree = "<group>"; };
 		73C928902166958C006980B8 /* BSTNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,14 +130,14 @@
 				73C9287821668B6D006980B8 /* MainWindowController.h */,
 				73C9287921668B6D006980B8 /* MainWindowController.m */,
 				73C9287A21668B6D006980B8 /* MainWindowController.xib */,
-				73C9287F21668E14006980B8 /* BSTMainView.h */,
-				73C9288021668E14006980B8 /* BSTMainView.m */,
-				73C9288321668E64006980B8 /* BSTNodeView.h */,
-				73C9288421668E64006980B8 /* BSTNodeView.m */,
-				73C9288721668E8D006980B8 /* BSTArrayNodeView.h */,
-				73C9288821668E8D006980B8 /* BSTArrayNodeView.m */,
-				73C9288B21668E98006980B8 /* BSTTreeNodeView.h */,
-				73C9288C21668E98006980B8 /* BSTTreeNodeView.m */,
+				73C9287F21668E14006980B8 /* BSTView.h */,
+				73C9288021668E14006980B8 /* BSTView.m */,
+				73C9288321668E64006980B8 /* BaseNodeView.h */,
+				73C9288421668E64006980B8 /* BaseNodeView.m */,
+				73C9288721668E8D006980B8 /* ArrayNodeView.h */,
+				73C9288821668E8D006980B8 /* ArrayNodeView.m */,
+				73C9288B21668E98006980B8 /* TreeNodeView.h */,
+				73C9288C21668E98006980B8 /* TreeNodeView.m */,
 				73C9288F2166958C006980B8 /* BSTNode.h */,
 				73C928902166958C006980B8 /* BSTNode.m */,
 				73C9284E21668A94006980B8 /* Assets.xcassets */,
@@ -298,14 +298,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73C9288121668E14006980B8 /* BSTMainView.m in Sources */,
+				73C9288121668E14006980B8 /* BSTView.m in Sources */,
 				73C9287B21668B6D006980B8 /* MainWindowController.m in Sources */,
-				73C9288D21668E98006980B8 /* BSTTreeNodeView.m in Sources */,
+				73C9288D21668E98006980B8 /* TreeNodeView.m in Sources */,
 				73C928912166958C006980B8 /* BSTNode.m in Sources */,
-				73C9288921668E8D006980B8 /* BSTArrayNodeView.m in Sources */,
+				73C9288921668E8D006980B8 /* ArrayNodeView.m in Sources */,
 				73C9285521668A94006980B8 /* main.m in Sources */,
 				73C9284D21668A90006980B8 /* AppDelegate.m in Sources */,
-				73C9288521668E64006980B8 /* BSTNodeView.m in Sources */,
+				73C9288521668E64006980B8 /* BaseNodeView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,10 +323,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				73C9287C21668B6D006980B8 /* MainWindowController.m in Sources */,
-				73C9288A21668E8D006980B8 /* BSTArrayNodeView.m in Sources */,
-				73C9288E21668E98006980B8 /* BSTTreeNodeView.m in Sources */,
-				73C9288221668E14006980B8 /* BSTMainView.m in Sources */,
-				73C9288621668E64006980B8 /* BSTNodeView.m in Sources */,
+				73C9288A21668E8D006980B8 /* ArrayNodeView.m in Sources */,
+				73C9288E21668E98006980B8 /* TreeNodeView.m in Sources */,
+				73C9288221668E14006980B8 /* BSTView.m in Sources */,
+				73C9288621668E64006980B8 /* BaseNodeView.m in Sources */,
 				73C9286B21668A94006980B8 /* BSTDemoUITests.m in Sources */,
 				73C928932166958C006980B8 /* BSTNode.m in Sources */,
 			);

@@ -1,5 +1,5 @@
 //
-//  BSTNodeView.h
+//  BaseNodeView.h
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
@@ -8,18 +8,16 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class BSTMainView;
+@class BSTView;
 @class BSTNode;
 
 NS_ASSUME_NONNULL_BEGIN
 
 /// Base class for views that represent a node in a binary search tree.
-@interface BSTNodeView : NSView
-
-#pragma mark - "View" properties
+@interface BaseNodeView : NSView
 
 /// The owning BSTMainView.
-@property (readonly) BSTMainView *mainView;
+@property (readonly) BSTView *mainView;
 
 @property BSTNode *node;
 

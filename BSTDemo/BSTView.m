@@ -1,21 +1,21 @@
 //
-//  BSTMainView.m
+//  BSTView.m
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
 //  Copyright © 2018 Andy Lee. All rights reserved.
 //
 
-#import "BSTMainView.h"
+#import "BSTView.h"
 #import "BSTNode.h"
-#import "BSTArrayNodeView.h"
-#import "BSTTreeNodeView.h"
+#import "ArrayNodeView.h"
+#import "TreeNodeView.h"
 
 
-@interface BSTMainView ()
+@interface BSTView ()
 @property NSMutableArray *sortedNodes;
 @property NSMutableArray *arrayNodeViews;
-@property IBOutlet BSTTreeNodeView *rootNodeView;
+@property IBOutlet TreeNodeView *rootNodeView;
 @end
 
 
@@ -26,12 +26,12 @@
 #define DEPTH_SEPARATION 40
 
 
-@implementation BSTMainView
+@implementation BSTView
 
 //TODO: Check what the rule was for duplicate nodes in a binary search tree.
 
-- (BSTArrayNodeView *)arrayNodeViewWithNode:(BSTNode *)node {
-	for (BSTArrayNodeView *nodeView in self.arrayNodeViews) {
+- (ArrayNodeView *)arrayNodeViewWithNode:(BSTNode *)node {
+	for (ArrayNodeView *nodeView in self.arrayNodeViews) {
 		if (nodeView.node == node) {
 			return nodeView;
 		}
@@ -40,18 +40,18 @@
 }
 
 
-- (BSTTreeNodeView *)treeNodeViewWithNode:(BSTNode *)node {
+- (TreeNodeView *)treeNodeViewWithNode:(BSTNode *)node {
 	return [self _treeNodeViewWithNode:node startingAt:self.rootNodeView];
 }
 
-- (BSTTreeNodeView *)_treeNodeViewWithNode:(BSTNode *)node startingAt:(BSTTreeNodeView *)nodeView {
+- (TreeNodeView *)_treeNodeViewWithNode:(BSTNode *)node startingAt:(TreeNodeView *)nodeView {
 	if (nodeView == nil) {
 		return nil;
 	}
 	if (nodeView.node == node) {
 		return nodeView;
 	}
-	BSTTreeNodeView *maybe = [self _treeNodeViewWithNode:node startingAt:nodeView.left];
+	TreeNodeView *maybe = [self _treeNodeViewWithNode:node startingAt:nodeView.left];
 	if (maybe) {
 		return maybe;
 	}
@@ -63,10 +63,10 @@
 }
 
 
-- (void)handleClickOnArrayNodeView:(BSTArrayNodeView *)arrayNodeView {
+- (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	// Case 1: There is no root yet, so make this node the root.
 	if (self.rootNodeView == nil) {
-		self.rootNodeView = [[BSTTreeNodeView alloc] init];
+		self.rootNodeView = [[TreeNodeView alloc] init];
 		self.rootNodeView.node = arrayNodeView.node;
 		[self addSubview:self.rootNodeView];
 		[self _doNodeViewLayout];
@@ -74,17 +74,17 @@
 	}
 
 	// Case 2: There is already a corresponding tree node view.
-	BSTTreeNodeView *treeNodeView = [self _treeNodeViewWithNode:arrayNodeView.node startingAt:self.rootNodeView];
+	TreeNodeView *treeNodeView = [self _treeNodeViewWithNode:arrayNodeView.node startingAt:self.rootNodeView];
 	if (treeNodeView) {
 		return;
 	}
 
 	// Case 3: There is not yet a corresponding tree node view.  Create one.
-	treeNodeView = [[BSTTreeNodeView alloc] init];
+	treeNodeView = [[TreeNodeView alloc] init];
 	treeNodeView.node = arrayNodeView.node;
 
 	// Insert the new tree node view into the BST of tree node views.
-	BSTTreeNodeView *currentNodeView = self.rootNodeView;
+	TreeNodeView *currentNodeView = self.rootNodeView;
 	NSInteger valueToInsert = treeNodeView.node.value;
 	while (YES) {
 		if (valueToInsert < currentNodeView.node.value) {
@@ -111,7 +111,7 @@
 }
 
 
-- (void)handleClickOnTreeNodeView:(BSTTreeNodeView *)nodeView {
+- (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView {
 
 }
 
@@ -127,7 +127,7 @@
 	[self setSubviews:@[]];
 	self.arrayNodeViews = [NSMutableArray array];
 	for (int i = 0; i < self.sortedNodes.count; i++) {
-		BSTArrayNodeView *nodeView = [[BSTArrayNodeView alloc] init];
+		ArrayNodeView *nodeView = [[ArrayNodeView alloc] init];
 		nodeView.node = self.sortedNodes[i];
 		[self.arrayNodeViews addObject:nodeView];
 		[self addSubview:nodeView];
@@ -144,7 +144,7 @@
 - (void)_doNodeViewLayout {
 	// Lay out the array node views.
 	for (NSInteger i = 0; i < self.arrayNodeViews.count; i++) {
-		BSTArrayNodeView *nodeView = self.arrayNodeViews[i];
+		ArrayNodeView *nodeView = self.arrayNodeViews[i];
 		nodeView.frame = [self _arrayNodeFrameAtIndex:i];
 	}
 
@@ -155,7 +155,7 @@
 }
 
 /// Considers the root to be at depth 0.
-- (void)_doTreeNodeViewLayoutStartingWith:(BSTTreeNodeView *)treeNodeView depth:(NSInteger)depth {
+- (void)_doTreeNodeViewLayoutStartingWith:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
 	if (treeNodeView == nil) {
 		return;
 	}
@@ -166,7 +166,7 @@
 	[self _doTreeNodeViewLayoutStartingWith:treeNodeView.right depth:(depth + 1)];
 }
 
-- (NSRect)_frameForTreeNodeView:(BSTTreeNodeView *)treeNodeView depth:(NSInteger)depth {
+- (NSRect)_frameForTreeNodeView:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
 	NSInteger arrayIndex = [self _arrayNodeIndexWithNode:treeNodeView.node];
 	if (arrayIndex == -1) {
 		abort();
@@ -179,7 +179,7 @@
 
 - (NSInteger)_arrayNodeIndexWithNode:(BSTNode *)node {
 	for (NSInteger i = 0; i < self.arrayNodeViews.count; i++) {
-		BSTArrayNodeView *nodeView = self.arrayNodeViews[i];
+		ArrayNodeView *nodeView = self.arrayNodeViews[i];
 		if (nodeView.node == node) {
 			return i;
 		}
@@ -232,7 +232,7 @@
 	[path stroke];
 }
 
-- (void)_drawTreeNodeLinesStartingWith:(BSTTreeNodeView *)treeNodeView depth:(NSInteger)depth {
+- (void)_drawTreeNodeLinesStartingWith:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
 	if (treeNodeView == nil) {
 		return;
 	}

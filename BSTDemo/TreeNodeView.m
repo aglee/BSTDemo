@@ -1,14 +1,14 @@
 //
-//  BSTTreeNodeView.m
+//  TreeNodeView.m
 //  BSTDemo
 //
 //  Created by Andy Lee on 10/4/18.
 //  Copyright © 2018 Andy Lee. All rights reserved.
 //
 
-#import "BSTTreeNodeView.h"
+#import "TreeNodeView.h"
 
-@implementation BSTTreeNodeView
+@implementation TreeNodeView
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
