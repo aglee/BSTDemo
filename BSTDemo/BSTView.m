@@ -27,53 +27,42 @@
 @implementation BSTView
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
-	// Regardless of which of the following cases we have, the array node view
-	// is now "in the tree".
-	arrayNodeView.backgroundColor = BaseNodeView.treeNodeBackgroundColor;
+	// If there is already a corresponding tree node view, do nothing.
+	if ([self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex]) {
+		return;
+	}
 
-	// Case 1: There is no root yet, so make this node the root.
+	// Create a tree node corresponding to the given array node, and insert it
+	// into the BST of tree node views.
+	TreeNodeView *treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
+														   sortIndex:arrayNodeView.sortIndex];
 	if (self.rootNodeView == nil) {
-		self.rootNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
-													  sortIndex:arrayNodeView.sortIndex];
-		[self addSubview:self.rootNodeView];
-		[self _doLayout];
-		return;
-	}
-
-	// Case 2: There is already a corresponding tree node view.
-	TreeNodeView *treeNodeView = [self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex startingAt:self.rootNodeView];
-	if (treeNodeView) {
-		return;
-	}
-
-	// Case 3: There is not yet a corresponding tree node view.  Create one.
-	treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
-											 sortIndex:arrayNodeView.sortIndex];
-
-	// Insert the new tree node view into the BST of tree node views.
-	TreeNodeView *currentNodeView = self.rootNodeView;
-	NSInteger valueToInsert = treeNodeView.value;
-	while (YES) {
-		if (valueToInsert < currentNodeView.value) {
-			if (currentNodeView.left == nil) {
-				currentNodeView.left = treeNodeView;
-				break;
+		self.rootNodeView = treeNodeView;
+	} else {
+		TreeNodeView *currentNodeView = self.rootNodeView;
+		while (YES) {
+			if (treeNodeView.value < currentNodeView.value) {
+				if (currentNodeView.left == nil) {
+					currentNodeView.left = treeNodeView;
+					break;
+				} else {
+					currentNodeView = currentNodeView.left;
+				}
 			} else {
-				currentNodeView = currentNodeView.left;
-			}
-		} else {
-			if (currentNodeView.right == nil) {
-				currentNodeView.right = treeNodeView;
-				break;
-			} else {
-				currentNodeView = currentNodeView.right;
+				if (currentNodeView.right == nil) {
+					currentNodeView.right = treeNodeView;
+					break;
+				} else {
+					currentNodeView = currentNodeView.right;
+				}
 			}
 		}
 	}
 
-	// Insert the new tree node view into the view hierarchy.
+	// Finish up display and layout adjustments.
 	[self addSubview:treeNodeView];
 	[self _doLayout];
+	arrayNodeView.backgroundColor = BaseNodeView.treeNodeBackgroundColor;
 	self.needsDisplay = YES;
 }
 
