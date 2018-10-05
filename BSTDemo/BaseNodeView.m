@@ -10,7 +10,7 @@
 
 @implementation BaseNodeView
 
-@synthesize backgroundColor = _backgroundColor;
+@synthesize isInTheTree = _isInTheTree;
 
 #pragma mark - Init/awake/dealloc
 
@@ -19,32 +19,32 @@
 	if (self) {
 		self.value = value;
 		self.sortIndex = sortIndex;
-		self.backgroundColor = self.class.defaultBackgroundColor;
+		self.isInTheTree = NO;
 	}
 	return self;
 }
 
 #pragma mark - Getters and setters
 
-+ (NSColor *)defaultBackgroundColor {
-	return NSColor.lightGrayColor;
-}
-
-+ (NSColor *)treeNodeBackgroundColor {
-	return NSColor.yellowColor;
-}
-
 - (BSTView *)mainView {
 	return (BSTView *)self.superview;
 }
 
-- (NSColor *)backgroundColor {
-	return _backgroundColor;
+- (BOOL)isInTheTree {
+	return _isInTheTree;
 }
 
-- (void)setBackgroundColor:(NSColor *)backgroundColor {
-	_backgroundColor = backgroundColor;
+- (void)setIsInTheTree:(BOOL)isInTheTree {
+	_isInTheTree = isInTheTree;
 	self.needsDisplay = YES;
+}
+
+- (NSColor *)backgroundColor {
+	if (self.isInTheTree) {
+		return NSColor.yellowColor;
+	} else {
+		return NSColor.lightGrayColor;
+	}
 }
 
 #pragma mark - NSView methods

@@ -25,10 +25,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// correlate "tree node views" and the corresponding "array node views".
 @property NSInteger sortIndex;
 
-@property NSColor *backgroundColor;
+@property BOOL isInTheTree;
 
-@property (class, readonly) NSColor *defaultBackgroundColor;
-@property (class, readonly) NSColor *treeNodeBackgroundColor;
+@property (readonly) NSColor *backgroundColor;
 
 - (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex;
 

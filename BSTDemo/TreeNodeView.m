@@ -15,7 +15,7 @@
 - (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex {
 	self = [super initWithValue:value sortIndex:sortIndex];
 	if (self) {
-		self.backgroundColor = self.class.treeNodeBackgroundColor;
+		self.isInTheTree = YES;
 	}
 	return self;
 }

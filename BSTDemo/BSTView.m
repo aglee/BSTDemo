@@ -62,7 +62,7 @@
 	// Finish up display and layout adjustments.
 	[self addSubview:treeNodeView];
 	[self _doLayout];
-	arrayNodeView.backgroundColor = BaseNodeView.treeNodeBackgroundColor;
+	arrayNodeView.isInTheTree = YES;
 	self.needsDisplay = YES;
 }
 
