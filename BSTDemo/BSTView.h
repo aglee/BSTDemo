@@ -27,9 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView;
 - (void)mouseExitedArrayNodeView:(ArrayNodeView *)arrayNodeView;
+- (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView;
 
-- (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
-- (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView;
+- (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView;
 
 @end
 

@@ -43,7 +43,7 @@
 	if (self.isInTheTree) {
 		return NSColor.yellowColor;
 	} else {
-		return NSColor.lightGrayColor;
+		return NSColor.whiteColor;
 	}
 }
 
