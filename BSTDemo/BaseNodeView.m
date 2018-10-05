@@ -7,7 +7,6 @@
 //
 
 #import "BaseNodeView.h"
-#import "BSTNode.h"
 
 
 @implementation BaseNodeView
@@ -31,7 +30,7 @@
 	NSFrameRect(self.bounds);
 
 	// Draw the node value.
-	NSString *valueString = [NSString stringWithFormat:@"%ld", self.node.value];
+	NSString *valueString = [NSString stringWithFormat:@"%ld", self.value];
 	NSRect valueRect = NSInsetRect(self.bounds, 4, 4);
 	[valueString drawInRect:valueRect withAttributes:nil];
 }

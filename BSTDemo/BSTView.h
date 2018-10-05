@@ -20,10 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// having been specified.
 - (void)setUpWithValues:(NSArray *)values;
 
-
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView;
-
 
 @end
 

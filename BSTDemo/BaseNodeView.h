@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @class BSTView;
-@class BSTNode;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// The owning BSTMainView.
 @property (readonly) BSTView *mainView;
 
-@property BSTNode *node;
+/// Index of this node within the sort order of nodes in self.mainView.
+@property NSInteger sortIndex;
+
+@property NSInteger value;
 
 @end
 

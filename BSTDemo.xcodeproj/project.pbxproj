@@ -25,9 +25,6 @@
 		73C9288A21668E8D006980B8 /* ArrayNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288821668E8D006980B8 /* ArrayNodeView.m */; };
 		73C9288D21668E98006980B8 /* TreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* TreeNodeView.m */; };
 		73C9288E21668E98006980B8 /* TreeNodeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C9288C21668E98006980B8 /* TreeNodeView.m */; };
-		73C928912166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
-		73C928922166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
-		73C928932166958C006980B8 /* BSTNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C928902166958C006980B8 /* BSTNode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,8 +70,6 @@
 		73C9288821668E8D006980B8 /* ArrayNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ArrayNodeView.m; sourceTree = "<group>"; };
 		73C9288B21668E98006980B8 /* TreeNodeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TreeNodeView.h; sourceTree = "<group>"; };
 		73C9288C21668E98006980B8 /* TreeNodeView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TreeNodeView.m; sourceTree = "<group>"; };
-		73C9288F2166958C006980B8 /* BSTNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BSTNode.h; sourceTree = "<group>"; };
-		73C928902166958C006980B8 /* BSTNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BSTNode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,8 +133,6 @@
 				73C9288821668E8D006980B8 /* ArrayNodeView.m */,
 				73C9288B21668E98006980B8 /* TreeNodeView.h */,
 				73C9288C21668E98006980B8 /* TreeNodeView.m */,
-				73C9288F2166958C006980B8 /* BSTNode.h */,
-				73C928902166958C006980B8 /* BSTNode.m */,
 				73C9284E21668A94006980B8 /* Assets.xcassets */,
 				73C9285021668A94006980B8 /* MainMenu.xib */,
 				73C9285321668A94006980B8 /* Info.plist */,
@@ -301,7 +294,6 @@
 				73C9288121668E14006980B8 /* BSTView.m in Sources */,
 				73C9287B21668B6D006980B8 /* MainWindowController.m in Sources */,
 				73C9288D21668E98006980B8 /* TreeNodeView.m in Sources */,
-				73C928912166958C006980B8 /* BSTNode.m in Sources */,
 				73C9288921668E8D006980B8 /* ArrayNodeView.m in Sources */,
 				73C9285521668A94006980B8 /* main.m in Sources */,
 				73C9284D21668A90006980B8 /* AppDelegate.m in Sources */,
@@ -314,7 +306,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				73C9286021668A94006980B8 /* BSTDemoTests.m in Sources */,
-				73C928922166958C006980B8 /* BSTNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,7 +319,6 @@
 				73C9288221668E14006980B8 /* BSTView.m in Sources */,
 				73C9288621668E64006980B8 /* BaseNodeView.m in Sources */,
 				73C9286B21668A94006980B8 /* BSTDemoUITests.m in Sources */,
-				73C928932166958C006980B8 /* BSTNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

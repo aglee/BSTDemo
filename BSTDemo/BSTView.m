@@ -7,14 +7,12 @@
 //
 
 #import "BSTView.h"
-#import "BSTNode.h"
 #import "ArrayNodeView.h"
 #import "TreeNodeView.h"
 
 
 @interface BSTView ()
-@property NSMutableArray *sortedNodes;
-@property NSMutableArray *arrayNodeViews;
+@property NSMutableArray *arrayNodeViews;  // These are in sorted order by value.
 @property IBOutlet TreeNodeView *rootNodeView;
 @end
 
@@ -30,32 +28,22 @@
 
 //TODO: Check what the rule was for duplicate nodes in a binary search tree.
 
-- (ArrayNodeView *)arrayNodeViewWithNode:(BSTNode *)node {
-	for (ArrayNodeView *nodeView in self.arrayNodeViews) {
-		if (nodeView.node == node) {
-			return nodeView;
-		}
-	}
-	return nil;
+- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex {
+	return [self _treeNodeViewWithSortIndex:sortIndex startingAt:self.rootNodeView];
 }
 
-
-- (TreeNodeView *)treeNodeViewWithNode:(BSTNode *)node {
-	return [self _treeNodeViewWithNode:node startingAt:self.rootNodeView];
-}
-
-- (TreeNodeView *)_treeNodeViewWithNode:(BSTNode *)node startingAt:(TreeNodeView *)nodeView {
+- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex startingAt:(TreeNodeView *)nodeView {
 	if (nodeView == nil) {
 		return nil;
 	}
-	if (nodeView.node == node) {
+	if (nodeView.sortIndex == sortIndex) {
 		return nodeView;
 	}
-	TreeNodeView *maybe = [self _treeNodeViewWithNode:node startingAt:nodeView.left];
+	TreeNodeView *maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.left];
 	if (maybe) {
 		return maybe;
 	}
-	maybe = [self _treeNodeViewWithNode:node startingAt:nodeView.right];
+	maybe = [self _treeNodeViewWithSortIndex:sortIndex startingAt:nodeView.right];
 	if (maybe) {
 		return maybe;
 	}
@@ -67,27 +55,29 @@
 	// Case 1: There is no root yet, so make this node the root.
 	if (self.rootNodeView == nil) {
 		self.rootNodeView = [[TreeNodeView alloc] init];
-		self.rootNodeView.node = arrayNodeView.node;
+		self.rootNodeView.sortIndex = arrayNodeView.sortIndex;
+		self.rootNodeView.value = arrayNodeView.value;
 		[self addSubview:self.rootNodeView];
 		[self _doNodeViewLayout];
 		return;
 	}
 
 	// Case 2: There is already a corresponding tree node view.
-	TreeNodeView *treeNodeView = [self _treeNodeViewWithNode:arrayNodeView.node startingAt:self.rootNodeView];
+	TreeNodeView *treeNodeView = [self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex startingAt:self.rootNodeView];
 	if (treeNodeView) {
 		return;
 	}
 
 	// Case 3: There is not yet a corresponding tree node view.  Create one.
 	treeNodeView = [[TreeNodeView alloc] init];
-	treeNodeView.node = arrayNodeView.node;
+	treeNodeView.sortIndex = arrayNodeView.sortIndex;
+	treeNodeView.value = arrayNodeView.value;
 
 	// Insert the new tree node view into the BST of tree node views.
 	TreeNodeView *currentNodeView = self.rootNodeView;
-	NSInteger valueToInsert = treeNodeView.node.value;
+	NSInteger valueToInsert = treeNodeView.value;
 	while (YES) {
-		if (valueToInsert < currentNodeView.node.value) {
+		if (valueToInsert < currentNodeView.value) {
 			if (currentNodeView.left == nil) {
 				currentNodeView.left = treeNodeView;
 				break;
@@ -117,18 +107,14 @@
 
 
 - (void)setUpWithValues:(NSArray *)values {
-	// Construct self.sortedNodes.
-	self.sortedNodes = [NSMutableArray array];
-	for (NSNumber *v in [values sortedArrayUsingSelector:@selector(compare:)]) {  //TODO: Look for a map method.
-		[self.sortedNodes addObject:[BSTNode nodeWithInteger:v.integerValue]];
-	}
-
 	// Construct self.arrayNodeViews.
+	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
 	[self setSubviews:@[]];
 	self.arrayNodeViews = [NSMutableArray array];
-	for (int i = 0; i < self.sortedNodes.count; i++) {
+	for (int i = 0; i < sortedValues.count; i++) {
 		ArrayNodeView *nodeView = [[ArrayNodeView alloc] init];
-		nodeView.node = self.sortedNodes[i];
+		nodeView.sortIndex = i;
+		nodeView.value = ((NSNumber *)sortedValues[i]).integerValue;
 		[self.arrayNodeViews addObject:nodeView];
 		[self addSubview:nodeView];
 	}
@@ -167,24 +153,10 @@
 }
 
 - (NSRect)_frameForTreeNodeView:(TreeNodeView *)treeNodeView depth:(NSInteger)depth {
-	NSInteger arrayIndex = [self _arrayNodeIndexWithNode:treeNodeView.node];
-	if (arrayIndex == -1) {
-		abort();
-	}
-	NSRect nodeFrame = [self _arrayNodeFrameAtIndex:arrayIndex];
+	NSRect nodeFrame = [self _arrayNodeFrameAtIndex:treeNodeView.sortIndex];
 	nodeFrame.origin.y = NSMaxY(self.bounds) - TREE_TOP_INSET - NODE_HEIGHT;  // y for depth 0
 	nodeFrame.origin.y -= depth * (NODE_HEIGHT + DEPTH_SEPARATION);  // offset y for actual depth
 	return nodeFrame;
-}
-
-- (NSInteger)_arrayNodeIndexWithNode:(BSTNode *)node {
-	for (NSInteger i = 0; i < self.arrayNodeViews.count; i++) {
-		ArrayNodeView *nodeView = self.arrayNodeViews[i];
-		if (nodeView.node == node) {
-			return i;
-		}
-	}
-	return -1;
 }
 
 - (NSRect)_arrayNodeFrameAtIndex:(NSInteger)arrayIndex {
