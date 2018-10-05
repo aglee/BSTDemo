@@ -20,8 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 /// order.
 @interface BSTView : NSView
 
-/// Initializes the data using the numbers in values.  Resets the BST to nil.
-- (void)setUpWithValues:(NSArray *)values;
+/// Initializes the view using the numbers in values.  Resets the BST to nil.
+- (void)resetWithValues:(NSArray *)values;
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView;

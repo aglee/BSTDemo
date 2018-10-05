@@ -106,7 +106,7 @@
 }
 
 
-- (void)setUpWithValues:(NSArray *)values {
+- (void)resetWithValues:(NSArray *)values {
 	// Construct self.arrayNodeViews.
 	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
 	[self setSubviews:@[]];

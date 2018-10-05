@@ -16,16 +16,13 @@
 @end
 
 
-
 @implementation MainWindowController
-
 
 #pragma mark - Action methods
 
 - (IBAction)resetNodes:(id)sender {
-	[self.mainView setUpWithValues:@[ @100, @200, @300, @400, @500, @600, @700, @800, @900, @1000, @1100, @1200 ]];
+	[self.mainView resetWithValues:@[ @100, @200, @300, @400, @500, @600, @700, @800, @900, @1000, @1100, @1200 ]];
 }
-
 
 #pragma mark - <NSWindowDelegate> methods
 

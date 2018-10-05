@@ -16,10 +16,7 @@
 @end
 
 
-
 @implementation AppDelegate
-
-
 
 #pragma mark - <NSApplicationDelegate> methods
 
@@ -27,11 +24,5 @@
 	self.mainWC = [[MainWindowController alloc] initWithWindowNibName:@"MainWindowController"];
 	[self.mainWC showWindow:nil];
 }
-
-
-- (void)applicationWillTerminate:(NSNotification *)aNotification {
-	// Insert code here to tear down your application
-}
-
 
 @end
