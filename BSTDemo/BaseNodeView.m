@@ -10,6 +10,8 @@
 
 @implementation BaseNodeView
 
+@synthesize backgroundColor = _backgroundColor;
+
 #pragma mark - Init/awake/dealloc
 
 - (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex {
@@ -17,20 +19,42 @@
 	if (self) {
 		self.value = value;
 		self.sortIndex = sortIndex;
+		self.backgroundColor = self.class.defaultBackgroundColor;
 	}
 	return self;
 }
 
 #pragma mark - Getters and setters
 
++ (NSColor *)defaultBackgroundColor {
+	return NSColor.lightGrayColor;
+}
+
++ (NSColor *)treeNodeBackgroundColor {
+	return NSColor.yellowColor;
+}
+
 - (BSTView *)mainView {
 	return (BSTView *)self.superview;
+}
+
+- (NSColor *)backgroundColor {
+	return _backgroundColor;
+}
+
+- (void)setBackgroundColor:(NSColor *)backgroundColor {
+	_backgroundColor = backgroundColor;
+	self.needsDisplay = YES;
 }
 
 #pragma mark - NSView methods
 
 - (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
+
+	// Draw the background.
+	[self.backgroundColor set];
+	NSRectFill(self.bounds);
 
 	// Draw the border.
 	[NSColor.blackColor set];

@@ -27,6 +27,10 @@
 @implementation BSTView
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
+	// Regardless of which of the following cases we have, the array node view
+	// is now "in the tree".
+	arrayNodeView.backgroundColor = BaseNodeView.treeNodeBackgroundColor;
+
 	// Case 1: There is no root yet, so make this node the root.
 	if (self.rootNodeView == nil) {
 		self.rootNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
@@ -107,7 +111,10 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
-    
+
+	[NSColor.whiteColor set];
+	NSRectFill(self.bounds);
+
 	[self _drawTreeNodeLinesStartingWith:self.rootNodeView depth:0];
 }
 
