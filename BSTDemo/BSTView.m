@@ -32,7 +32,7 @@
 		self.rootNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
 													  sortIndex:arrayNodeView.sortIndex];
 		[self addSubview:self.rootNodeView];
-		[self _doNodeViewLayout];
+		[self _doLayout];
 		return;
 	}
 
@@ -69,7 +69,7 @@
 
 	// Insert the new tree node view into the view hierarchy.
 	[self addSubview:treeNodeView];
-	[self _doNodeViewLayout];
+	[self _doLayout];
 	self.needsDisplay = YES;
 }
 
@@ -95,14 +95,14 @@
 	self.rootNodeView = nil;
 
 	// Lay out all the nodes we just created.
-	[self _doNodeViewLayout];
+	[self _doLayout];
 	self.needsDisplay = YES;
 }
 
 #pragma mark - NSView methods
 
 - (void)resizeSubviewsWithOldSize:(NSSize)oldSize {
-	[self _doNodeViewLayout];
+	[self _doLayout];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
@@ -151,7 +151,7 @@
 
 #pragma mark - Private methods - layout
 
-- (void)_doNodeViewLayout {
+- (void)_doLayout {
 	// Lay out the array node views.
 	for (NSInteger i = 0; i < self.arrayNodeViews.count; i++) {
 		ArrayNodeView *nodeView = self.arrayNodeViews[i];
