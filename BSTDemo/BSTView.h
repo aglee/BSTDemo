@@ -23,6 +23,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initializes the view using the numbers in values.  Resets the BST to nil.
 - (void)resetWithValues:(NSArray *)values;
 
+#pragma mark - Event handling
+
+- (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView;
+- (void)mouseExitedArrayNodeView:(ArrayNodeView *)arrayNodeView;
+
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)nodeView;
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)nodeView;
 

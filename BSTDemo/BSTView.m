@@ -14,6 +14,7 @@
 @interface BSTView ()
 @property NSMutableArray *arrayNodeViews;  // These are in sorted order by value.
 @property IBOutlet TreeNodeView *rootNodeView;
+@property ArrayNodeView *hoveredArrayNodeView;  // Is set when the mouse hovers over an array node view.
 @end
 
 
@@ -47,6 +48,16 @@
 }
 
 #pragma mark - Event handling
+
+- (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView {
+	self.hoveredArrayNodeView = arrayNodeView;
+	self.needsDisplay = YES;
+}
+
+- (void)mouseExitedArrayNodeView:(ArrayNodeView *)arrayNodeView {
+	self.hoveredArrayNodeView = nil;
+	self.needsDisplay = YES;
+}
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	// If there is already a corresponding tree node view, do nothing.
@@ -85,6 +96,7 @@
 	[self addSubview:treeNodeView];
 	[self _doLayout];
 	arrayNodeView.isInTheTree = YES;
+	self.hoveredArrayNodeView = nil;
 	self.needsDisplay = YES;
 }
 
@@ -108,10 +120,14 @@
 
 	// Draw lines connecting parent nodes to child nodes.
 	[self _drawTreeNodeLinesStartingWith:self.rootNodeView];
+
+	// If an array node view is being hovered over, reflect that.
+	[self _highlightHoveredArrayNodeView];
 }
 
 #pragma mark - Private methods - drawing
 
+/// Doesn't set a color.  Uses the graphics context's current color.
 - (void)_drawLineFromBottomOf:(NSView *)upperView toTopOf:(NSView *)lowerView {
 	// Calculate the two points to connect.
 	NSPoint startPoint = NSMakePoint(NSMidX(upperView.frame), NSMinY(upperView.frame));
@@ -124,7 +140,6 @@
 
 	// Draw the path.
 	[path setLineWidth:1];
-	[NSColor.blackColor set];
 	[path stroke];
 }
 
@@ -141,6 +156,48 @@
 	if (treeNodeView.right) {
 		[self _drawLineFromBottomOf:treeNodeView toTopOf:treeNodeView.right];
 		[self _drawTreeNodeLinesStartingWith:treeNodeView.right];
+	}
+}
+
+/// Draws an outline to indicate to the user that the view is clickable.
+- (void)_highlightNodeView:(BaseNodeView *)nodeView {
+	NSRect highlightRect = nodeView.frame;
+	highlightRect = NSInsetRect(highlightRect, -3, -3);
+	[NSColor.blueColor set];
+	NSFrameRectWithWidth(highlightRect, 2);
+}
+
+- (void)_highlightHoveredArrayNodeView {
+	if (self.hoveredArrayNodeView == nil) {
+		return;
+	}
+
+	if (!self.hoveredArrayNodeView.isInTheTree) {
+		// Highlight the hovered view to indicate it is clickable.
+		[self _highlightNodeView:self.hoveredArrayNodeView];
+
+		// Draw a connecting line from the hovered view to its potential parent node view.
+		if (self.rootNodeView != nil) {
+			TreeNodeView *potentialParentNodeView = self.rootNodeView;
+			while (YES) {
+				if (self.hoveredArrayNodeView.value < potentialParentNodeView.value) {
+					if (potentialParentNodeView.left == nil) {
+						break;
+					} else {
+						potentialParentNodeView = potentialParentNodeView.left;
+					}
+				} else {
+					if (potentialParentNodeView.right == nil) {
+						break;
+					} else {
+						potentialParentNodeView = potentialParentNodeView.right;
+					}
+				}
+			}
+
+			[NSColor.redColor set];
+			[self _drawLineFromBottomOf:potentialParentNodeView toTopOf:self.hoveredArrayNodeView];
+		}
 	}
 }
 
