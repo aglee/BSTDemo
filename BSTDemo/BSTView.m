@@ -234,10 +234,10 @@
 	// a ring around its counterpart tree node view.
 	TreeNodeView *treeNodeView = [self _treeNodeViewCounterpartOf:self.hoveredArrayNodeView];
 	if (treeNodeView == nil) {
-		TreeNodeView *potentialParentNodeView = [self _potentialParentOf:self.hoveredArrayNodeView];
-		if (potentialParentNodeView) {
+		TreeNodeView *parentNodeView = [self _wouldBeParentOfValue:self.hoveredArrayNodeView.value];
+		if (parentNodeView) {
 			[POTENTIAL_PARENT_LINE_COLOR set];
-			[self _drawLineFromBottomOf:potentialParentNodeView toTopOf:self.hoveredArrayNodeView];
+			[self _drawLineFromBottomOf:parentNodeView toTopOf:self.hoveredArrayNodeView];
 		}
 	} else {
 		if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
@@ -250,29 +250,6 @@
 	if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
 		[RING_COLOR_CLICKABLE_NODE set];
 		[self _drawRingAroundView:self.hoveredArrayNodeView];
-	}
-}
-
-- (TreeNodeView *)_potentialParentOf:(ArrayNodeView *)arrayNodeView {
-	if (self.rootNodeView == nil) {
-		return nil;
-	}
-
-	TreeNodeView *potentialParentNodeView = self.rootNodeView;
-	while (YES) {
-		if (arrayNodeView.value < potentialParentNodeView.value) {
-			if (potentialParentNodeView.left == nil) {
-				return potentialParentNodeView;
-			} else {
-				potentialParentNodeView = potentialParentNodeView.left;
-			}
-		} else {
-			if (potentialParentNodeView.right == nil) {
-				return potentialParentNodeView;
-			} else {
-				potentialParentNodeView = potentialParentNodeView.right;
-			}
-		}
 	}
 }
 
@@ -368,7 +345,32 @@
 	return nodeFrame;
 }
 
-#pragma mark - Private methods - node views
+#pragma mark - Private methods - node view relationships
+
+/// Returns the tree node view to which a child would be added if nodeValue were
+/// added to the tree right now.  Returns nil if the tree is empty.
+- (TreeNodeView *)_wouldBeParentOfValue:(NSInteger)nodeValue {
+	if (self.rootNodeView == nil) {
+		return nil;
+	}
+
+	TreeNodeView *parentNodeView = self.rootNodeView;
+	while (YES) {
+		if (nodeValue < parentNodeView.value) {
+			if (parentNodeView.left == nil) {
+				return parentNodeView;
+			} else {
+				parentNodeView = parentNodeView.left;
+			}
+		} else {
+			if (parentNodeView.right == nil) {
+				return parentNodeView;
+			} else {
+				parentNodeView = parentNodeView.right;
+			}
+		}
+	}
+}
 
 - (TreeNodeView *)_treeNodeViewCounterpartOf:(ArrayNodeView *)arrayNodeView {
 	return [self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex startingAt:self.rootNodeView];
@@ -399,27 +401,13 @@
 	// into the BST of tree node views.
 	TreeNodeView *treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
 														   sortIndex:arrayNodeView.sortIndex];
-	if (self.rootNodeView == nil) {
+	TreeNodeView *parentNodeView = [self _wouldBeParentOfValue:treeNodeView.value];
+	if (parentNodeView == nil) {
 		self.rootNodeView = treeNodeView;
+	} else if (treeNodeView.value < parentNodeView.value) {
+		parentNodeView.left = treeNodeView;
 	} else {
-		TreeNodeView *currentNodeView = self.rootNodeView;
-		while (YES) {
-			if (treeNodeView.value < currentNodeView.value) {
-				if (currentNodeView.left == nil) {
-					currentNodeView.left = treeNodeView;
-					break;
-				} else {
-					currentNodeView = currentNodeView.left;
-				}
-			} else {
-				if (currentNodeView.right == nil) {
-					currentNodeView.right = treeNodeView;
-					break;
-				} else {
-					currentNodeView = currentNodeView.right;
-				}
-			}
-		}
+		parentNodeView.right = treeNodeView;
 	}
 
 	// Finish up display and layout adjustments.
