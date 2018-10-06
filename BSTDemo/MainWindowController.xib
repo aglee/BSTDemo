@@ -61,17 +61,6 @@
                             <action selector="makeRandomTree:" target="-2" id="9Jq-QZ-R67"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bw3-1X-jM9">
-                        <rect key="frame" x="225" y="13" width="170" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="push" title="Finish Tree Randomly" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="s9s-oi-Ixp">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="finishTreeRandomly:" target="-2" id="8DB-uf-n2n"/>
-                        </connections>
-                    </button>
                 </subviews>
             </view>
             <connections>
