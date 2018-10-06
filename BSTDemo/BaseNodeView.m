@@ -70,12 +70,14 @@
 	NSFrameRect(self.bounds);
 
 	// Draw the node value.
+	// Note: I use ceil for the y coordinate because if the string can't be in
+	// the exact vertical center I'd rather it be a pixel high than a pixel low.
 	NSDictionary *attr = @{ NSFontAttributeName: [NSFont fontWithName:@"Courier" size:20.0] };
 	NSString *valueString = [NSString stringWithFormat:@"%ld", self.value];
 	NSSize stringSize = [valueString sizeWithAttributes:attr];
 	NSRect valueRect = (NSRect) { .origin = NSZeroPoint, .size = stringSize };
 	valueRect.origin.x = floor((NSWidth(self.bounds) - stringSize.width) / 2.0);
-	valueRect.origin.y = floor((NSHeight(self.bounds) - stringSize.height) / 2.0);
+	valueRect.origin.y = ceil((NSHeight(self.bounds) - stringSize.height) / 2.0);
 	[valueString drawInRect:valueRect withAttributes:attr];
 }
 
