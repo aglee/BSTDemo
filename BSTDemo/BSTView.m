@@ -92,50 +92,10 @@
 	}
 }
 
-/// Creates a tree node view corresponding to the given array view, and inserts
-/// it into the BST of tree node views.
-- (void)_addToTree:(ArrayNodeView *)arrayNodeView {
-	// Create a tree node corresponding to the given array node, and insert it
-	// into the BST of tree node views.
-	TreeNodeView *treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
-														   sortIndex:arrayNodeView.sortIndex];
-	if (self.rootNodeView == nil) {
-		self.rootNodeView = treeNodeView;
-	} else {
-		TreeNodeView *currentNodeView = self.rootNodeView;
-		while (YES) {
-			if (treeNodeView.value < currentNodeView.value) {
-				if (currentNodeView.left == nil) {
-					currentNodeView.left = treeNodeView;
-					break;
-				} else {
-					currentNodeView = currentNodeView.left;
-				}
-			} else {
-				if (currentNodeView.right == nil) {
-					currentNodeView.right = treeNodeView;
-					break;
-				} else {
-					currentNodeView = currentNodeView.right;
-				}
-			}
-		}
-	}
-
-	// Finish up display and layout adjustments.
-	treeNodeView.backgroundColor = NODE_COLOR_IN_TREE;
-	arrayNodeView.backgroundColor = NODE_COLOR_IN_TREE;
-	[self addSubview:treeNodeView];
-	[self _doLayout];
-	self.hoveredArrayNodeView = nil;
-	self.needsDisplay = YES;
-}
-
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView {
 	self.selectedTreeNodeView = treeNodeView;
 	self.needsDisplay = YES;
 }
-
 
 #pragma mark - NSView methods
 
@@ -353,6 +313,45 @@
 		return maybe;
 	}
 	return nil;
+}
+
+/// Creates a tree node view corresponding to the given array view, and inserts
+/// it into the BST of tree node views.
+- (void)_addToTree:(ArrayNodeView *)arrayNodeView {
+	// Create a tree node corresponding to the given array node, and insert it
+	// into the BST of tree node views.
+	TreeNodeView *treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
+														   sortIndex:arrayNodeView.sortIndex];
+	if (self.rootNodeView == nil) {
+		self.rootNodeView = treeNodeView;
+	} else {
+		TreeNodeView *currentNodeView = self.rootNodeView;
+		while (YES) {
+			if (treeNodeView.value < currentNodeView.value) {
+				if (currentNodeView.left == nil) {
+					currentNodeView.left = treeNodeView;
+					break;
+				} else {
+					currentNodeView = currentNodeView.left;
+				}
+			} else {
+				if (currentNodeView.right == nil) {
+					currentNodeView.right = treeNodeView;
+					break;
+				} else {
+					currentNodeView = currentNodeView.right;
+				}
+			}
+		}
+	}
+
+	// Finish up display and layout adjustments.
+	treeNodeView.backgroundColor = NODE_COLOR_IN_TREE;
+	arrayNodeView.backgroundColor = NODE_COLOR_IN_TREE;
+	[self addSubview:treeNodeView];
+	[self _doLayout];
+	self.hoveredArrayNodeView = nil;
+	self.needsDisplay = YES;
 }
 
 @end
