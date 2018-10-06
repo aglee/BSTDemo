@@ -11,6 +11,22 @@
 
 @implementation TreeNodeView
 
+- (TreeNodeView *)minDescendant {
+	TreeNodeView *result = self;
+	while (result.left) {
+		result = result.left;
+	}
+	return result;
+}
+
+- (TreeNodeView *)maxDescendant {
+	TreeNodeView *result = self;
+	while (result.right) {
+		result = result.right;
+	}
+	return result;
+}
+
 #pragma mark - NSResponder methods
 
 - (void)mouseUp:(NSEvent *)event {

@@ -239,38 +239,6 @@
 	}
 }
 
-/// Returns nil if treeNodeView is nil, else array of two indexes into the sorted array.
-- (NSArray<NSNumber *> *)_minMaxSortIndexesInTree:(TreeNodeView *)treeNodeView {
-	if (treeNodeView == nil) {
-		return nil;
-	}
-
-	// Visit every node in the tree using breadth-first traversal.
-	NSInteger minIndex = NSIntegerMax;
-	NSInteger maxIndex = NSIntegerMin;
-	NSArray<TreeNodeView *> *row = @[ treeNodeView ];
-	while (row.count > 0) {
-		NSMutableArray<TreeNodeView *> *nextRow = [NSMutableArray array];
-		for (TreeNodeView *treeNodeView in row) {
-			if (treeNodeView.sortIndex < minIndex) {
-				minIndex = treeNodeView.sortIndex;
-			}
-			if (treeNodeView.sortIndex > maxIndex) {
-				maxIndex = treeNodeView.sortIndex;
-			}
-			if (treeNodeView.left) {
-				[nextRow addObject:treeNodeView.left];
-			}
-			if (treeNodeView.right) {
-				[nextRow addObject:treeNodeView.right];
-			}
-		}
-		row = nextRow;
-	}
-
-	return @[ @(minIndex), @(maxIndex) ];
-}
-
 - (void)_highlightSelectedTreeNodeView {
 	// If there isn't a selected tree node view, there's nothing to highlight.
 	if (self.selectedTreeNodeView == nil) {
@@ -278,9 +246,8 @@
 	}
 
 	// Get the range of sorted array indexes covered by the selected subtree.
-	NSArray<NSNumber *> *minMaxIndexes = [self _minMaxSortIndexesInTree:self.selectedTreeNodeView];
-	NSInteger minIndex = minMaxIndexes[0].integerValue;
-	NSInteger maxIndex = minMaxIndexes[1].integerValue;
+	NSInteger minIndex = self.selectedTreeNodeView.minDescendant.sortIndex;
+	NSInteger maxIndex = self.selectedTreeNodeView.maxDescendant.sortIndex;
 
 	// Draw a fill in the bounding rectangle of three views: the tree node view
 	// and the two array node views at the min and max.

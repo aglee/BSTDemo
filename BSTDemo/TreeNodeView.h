@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property TreeNodeView *left;
 @property TreeNodeView *right;
 
+- (TreeNodeView *)minDescendant;
+- (TreeNodeView *)maxDescendant;
+
 @end
 
 NS_ASSUME_NONNULL_END
