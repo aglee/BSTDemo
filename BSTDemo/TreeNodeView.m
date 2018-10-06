@@ -11,16 +11,6 @@
 
 @implementation TreeNodeView
 
-#pragma mark - Init/awake/dealloc
-
-- (instancetype)initWithValue:(NSInteger)value sortIndex:(NSInteger)sortIndex {
-	self = [super initWithValue:value sortIndex:sortIndex];
-	if (self) {
-		self.isInTheTree = YES;
-	}
-	return self;
-}
-
 #pragma mark - NSResponder methods
 
 - (void)mouseUp:(NSEvent *)event {

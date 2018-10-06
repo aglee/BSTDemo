@@ -36,7 +36,7 @@
 #define ARRAY_SEPARATION 4
 #define TREE_TOP_INSET 20
 #define DEPTH_SEPARATION 40
-
+#define NODE_COLOR_IN_TREE (NSColor.yellowColor)
 
 @implementation BSTView
 
@@ -45,7 +45,7 @@
 	self.hoveredArrayNodeView = nil;
 	self.selectedTreeNodeView = nil;
 
-	// Construct self.arrayNodeViews.
+	// Create the array node views.
 	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
 	[self setSubviews:@[]];
 	self.arrayNodeViews = [NSMutableArray array];
@@ -107,9 +107,10 @@
 	}
 
 	// Finish up display and layout adjustments.
+	treeNodeView.backgroundColor = NODE_COLOR_IN_TREE;
+	arrayNodeView.backgroundColor = NODE_COLOR_IN_TREE;
 	[self addSubview:treeNodeView];
 	[self _doLayout];
-	arrayNodeView.isInTheTree = YES;
 	self.hoveredArrayNodeView = nil;
 	self.needsDisplay = YES;
 }
@@ -206,7 +207,7 @@
 	}
 
 	// If the array node view is already "in the tree", there's nothing to highlight.
-	if (self.hoveredArrayNodeView.isInTheTree) {
+	if ([self _treeNodeViewWithSortIndex:self.hoveredArrayNodeView.sortIndex] != nil) {
 		return;
 	}
 
