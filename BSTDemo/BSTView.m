@@ -24,6 +24,10 @@
 /// user unhovers.
 @property ArrayNodeView *hoveredArrayNodeView;
 
+/// Is set when the mouse hovers over a tree node view.  Is unset when the
+/// user unhovers.
+@property TreeNodeView *hoveredTreeNodeView;
+
 /// Is set when the user clicks on a tree node view.  Is unset when the user
 /// clicks directly on the BSTView (not a subview).
 @property TreeNodeView *selectedTreeNodeView;
@@ -92,6 +96,16 @@
 	}
 }
 
+- (void)mouseEnteredTreeNodeView:(TreeNodeView *)treeNodeView {
+	self.hoveredTreeNodeView = treeNodeView;
+	self.needsDisplay = YES;
+}
+
+- (void)mouseExitedTreeNodeView:(TreeNodeView *)treeNodeView {
+	self.hoveredTreeNodeView = nil;
+	self.needsDisplay = YES;
+}
+
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView {
 	self.selectedTreeNodeView = treeNodeView;
 	self.needsDisplay = YES;
@@ -118,6 +132,9 @@
 
 	// If an array node view is being hovered over, reflect that.
 	[self _highlightHoveredArrayNodeView];
+
+	// If a tree node view is being hovered over, reflect that.
+	[self _highlightHoveredTreeNodeView];
 }
 
 #pragma mark - NSResponder methods
@@ -210,6 +227,19 @@
 	if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
 		[RING_COLOR_CLICKABLE_NODE set];
 		[self _drawRingAroundView:self.hoveredArrayNodeView];
+	}
+}
+
+- (void)_highlightHoveredTreeNodeView {
+	// If we're not hovering over an array node view, there's nothing to highlight.
+	if (self.hoveredTreeNodeView == nil) {
+		return;
+	}
+
+	// Draw a ring around the hovered view to indicate it is clickable.
+	if (self.selectedTreeNodeView == nil || self.hoveredTreeNodeView != self.selectedTreeNodeView) {
+		[RING_COLOR_CLICKABLE_NODE set];
+		[self _drawRingAroundView:self.hoveredTreeNodeView];
 	}
 }
 

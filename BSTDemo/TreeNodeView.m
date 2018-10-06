@@ -29,6 +29,14 @@
 
 #pragma mark - NSResponder methods
 
+- (void)mouseEntered:(NSEvent *)event {
+	[self.mainView mouseEnteredTreeNodeView:self];
+}
+
+- (void)mouseExited:(NSEvent *)event {
+	[self.mainView mouseExitedTreeNodeView:self];
+}
+
 - (void)mouseUp:(NSEvent *)event {
 	NSPoint mousePoint = [self convertPoint:event.locationInWindow fromView:nil];
 	if (NSPointInRect(mousePoint, self.bounds)) {

@@ -45,6 +45,19 @@
 
 #pragma mark - NSView methods
 
+- (void)updateTrackingAreas {
+	[super updateTrackingAreas];
+
+	if (self.trackingAreas.count == 0) {
+		[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:self.bounds
+														   options:(NSTrackingMouseEnteredAndExited
+																	| NSTrackingActiveInKeyWindow
+																	| NSTrackingInVisibleRect)
+															 owner:self
+														  userInfo:nil]];
+	}
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
 	[super drawRect:dirtyRect];
 

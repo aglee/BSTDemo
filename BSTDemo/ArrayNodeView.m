@@ -11,21 +11,6 @@
 
 @implementation ArrayNodeView
 
-#pragma mark - NSView methods
-
-- (void)updateTrackingAreas {
-	[super updateTrackingAreas];
-
-	if (self.trackingAreas.count == 0) {
-		[self addTrackingArea:[[NSTrackingArea alloc] initWithRect:self.bounds
-														   options:(NSTrackingMouseEnteredAndExited
-																	| NSTrackingActiveInKeyWindow
-																	| NSTrackingInVisibleRect)
-															 owner:self
-														  userInfo:nil]];
-	}
-}
-
 #pragma mark - NSResponder methods
 
 - (void)mouseEntered:(NSEvent *)event {

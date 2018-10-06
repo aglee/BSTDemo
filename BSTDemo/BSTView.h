@@ -27,11 +27,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView;
 - (void)mouseExitedArrayNodeView:(ArrayNodeView *)arrayNodeView;
-
-/// If the array node view is not already "in the tree", adds it to the tree.
-/// If the array node view is "in the tree", selects that tree node view.
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView;
 
+- (void)mouseEnteredTreeNodeView:(TreeNodeView *)treeNodeView;
+- (void)mouseExitedTreeNodeView:(TreeNodeView *)treeNodeView;
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView;
 
 @end
