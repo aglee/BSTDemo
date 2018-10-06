@@ -30,7 +30,7 @@
 	return NSColor.whiteColor;
 }
 
-- (BSTView *)mainView {
+- (BSTView *)owningView {
 	return (BSTView *)self.superview;
 }
 

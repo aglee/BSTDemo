@@ -14,17 +14,17 @@
 #pragma mark - NSResponder methods
 
 - (void)mouseEntered:(NSEvent *)event {
-	[self.mainView mouseEnteredArrayNodeView:self];
+	[self.owningView mouseEnteredArrayNodeView:self];
 }
 
 - (void)mouseExited:(NSEvent *)event {
-	[self.mainView mouseExitedArrayNodeView:self];
+	[self.owningView mouseExitedArrayNodeView:self];
 }
 
 - (void)mouseUp:(NSEvent *)event {
 	NSPoint mousePoint = [self convertPoint:event.locationInWindow fromView:nil];
 	if (NSPointInRect(mousePoint, self.bounds)) {
-		[self.mainView handleClickOnArrayNodeView:self];
+		[self.owningView handleClickOnArrayNodeView:self];
 	} else {
 		[super mouseUp:event];
 	}
