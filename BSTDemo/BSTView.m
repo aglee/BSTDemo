@@ -31,12 +31,21 @@
 @end
 
 
+// Layout
 #define NODE_HEIGHT 30
 #define ARRAY_INSET 20
 #define ARRAY_SEPARATION 4
 #define TREE_TOP_INSET 20
 #define DEPTH_SEPARATION 40
+
+// Colors
 #define NODE_COLOR_IN_TREE (NSColor.yellowColor)
+#define RING_COLOR_CLICKABLE_NODE (NSColor.grayColor)
+#define RING_COLOR_SELECTED_TREE_NODE (NSColor.redColor)
+#define BACKGROUND_COLOR (NSColor.whiteColor)
+#define PARENT_LINE_COLOR (NSColor.blackColor)
+#define POTENTIAL_PARENT_LINE_COLOR (NSColor.greenColor)
+#define SUBTREE_HIGHLIGHT_RECT_COLOR [NSColor colorWithCalibratedWhite:0.95 alpha:1.0]
 
 @implementation BSTView
 
@@ -74,11 +83,18 @@
 }
 
 - (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
-	// If there is already a corresponding tree node view, do nothing.
-	if ([self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex]) {
-		return;
+	TreeNodeView *treeNodeView = [self _treeNodeViewCounterpartOf:arrayNodeView];
+	if (treeNodeView == nil) {
+		[self _addToTree:arrayNodeView];
+	} else {
+		self.selectedTreeNodeView = treeNodeView;
+		self.needsDisplay = YES;
 	}
+}
 
+/// Creates a tree node view corresponding to the given array view, and inserts
+/// it into the BST of tree node views.
+- (void)_addToTree:(ArrayNodeView *)arrayNodeView {
 	// Create a tree node corresponding to the given array node, and insert it
 	// into the BST of tree node views.
 	TreeNodeView *treeNodeView = [[TreeNodeView alloc] initWithValue:arrayNodeView.value
@@ -115,7 +131,6 @@
 	self.needsDisplay = YES;
 }
 
-
 - (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView {
 	self.selectedTreeNodeView = treeNodeView;
 	self.needsDisplay = YES;
@@ -132,7 +147,7 @@
     [super drawRect:dirtyRect];
 
 	// Draw background color so we look the same regardless of Mojave dark mode.
-	[NSColor.whiteColor set];
+	[BACKGROUND_COLOR set];
 	NSRectFill(self.bounds);
 
 	// If a tree node view is selected, reflect that.
@@ -181,7 +196,7 @@
 		return;
 	}
 
-	[NSColor.blackColor set];
+	[PARENT_LINE_COLOR set];
 	if (treeNodeView.left) {
 		[self _drawLineFromBottomOf:treeNodeView toTopOf:treeNodeView.left];
 		[self _drawTreeNodeLinesStartingWith:treeNodeView.left];
@@ -206,17 +221,10 @@
 		return;
 	}
 
-	// If the array node view is already "in the tree", there's nothing to highlight.
-	if ([self _treeNodeViewWithSortIndex:self.hoveredArrayNodeView.sortIndex] != nil) {
-		return;
-	}
-
-	// Highlight the hovered view to indicate it is clickable.
-	[NSColor.redColor set];
-	[self _drawRingAroundView:self.hoveredArrayNodeView];
-
-	// Draw a connecting line from the hovered view to its potential parent node view.
-	if (self.rootNodeView != nil) {
+	// If the hovered view is not in the tree, draw a line from it to its
+	// potential parent node view.
+	TreeNodeView *treeNodeView = [self _treeNodeViewCounterpartOf:self.hoveredArrayNodeView];
+	if (treeNodeView == nil && self.rootNodeView != nil) {
 		TreeNodeView *potentialParentNodeView = self.rootNodeView;
 		while (YES) {
 			if (self.hoveredArrayNodeView.value < potentialParentNodeView.value) {
@@ -234,8 +242,14 @@
 			}
 		}
 
-		[NSColor.redColor set];
+		[POTENTIAL_PARENT_LINE_COLOR set];
 		[self _drawLineFromBottomOf:potentialParentNodeView toTopOf:self.hoveredArrayNodeView];
+	}
+
+	// Draw a ring around the hovered view to indicate it is clickable.
+	if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
+		[RING_COLOR_CLICKABLE_NODE set];
+		[self _drawRingAroundView:self.hoveredArrayNodeView];
 	}
 }
 
@@ -249,17 +263,17 @@
 	NSInteger minIndex = self.selectedTreeNodeView.minDescendant.sortIndex;
 	NSInteger maxIndex = self.selectedTreeNodeView.maxDescendant.sortIndex;
 
-	// Draw a fill in the bounding rectangle of three views: the tree node view
-	// and the two array node views at the min and max.
+	// Draw a fill color in the bounding rectangle of the tree node view and the
+	// two array node views at the min and max.
 	NSRect highlightRect = self.selectedTreeNodeView.frame;
 	highlightRect = NSUnionRect(highlightRect, self.arrayNodeViews[minIndex].frame);
 	highlightRect = NSUnionRect(highlightRect, self.arrayNodeViews[maxIndex].frame);
 	highlightRect = NSInsetRect(highlightRect, -3, -3);
-	[[NSColor colorWithCalibratedWhite:0.83 alpha:1.0] set];
+	[SUBTREE_HIGHLIGHT_RECT_COLOR set];
 	NSRectFill(highlightRect);
 
 	// Highlight the selected tree node view and its array node view counterpart.
-	[NSColor.blueColor set];
+	[RING_COLOR_SELECTED_TREE_NODE set];
 	[self _drawRingAroundView:self.selectedTreeNodeView];
 	[self _drawRingAroundView:self.arrayNodeViews[self.selectedTreeNodeView.sortIndex]];
 }
@@ -319,8 +333,8 @@
 
 #pragma mark - Private methods - node views
 
-- (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex {
-	return [self _treeNodeViewWithSortIndex:sortIndex startingAt:self.rootNodeView];
+- (TreeNodeView *)_treeNodeViewCounterpartOf:(ArrayNodeView *)arrayNodeView {
+	return [self _treeNodeViewWithSortIndex:arrayNodeView.sortIndex startingAt:self.rootNodeView];
 }
 
 - (TreeNodeView *)_treeNodeViewWithSortIndex:(NSInteger)sortIndex startingAt:(TreeNodeView *)nodeView {
