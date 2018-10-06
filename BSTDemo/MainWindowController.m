@@ -24,6 +24,15 @@
 	[self.mainView resetWithValues:@[ @1, @2, @3, @4, @5, @6, @7, @8, @9, @10, @11, @12 ]];
 }
 
+- (IBAction)makeRandomTree:(id)sender {
+	[self resetNodes:nil];
+	[self finishTreeRandomly:nil];
+}
+
+- (IBAction)finishTreeRandomly:(id)sender {
+	[self.mainView finishTreeRandomly];
+}
+
 #pragma mark - <NSWindowDelegate> methods
 
 - (void)windowDidLoad {

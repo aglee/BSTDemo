@@ -23,6 +23,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Initializes the view using the numbers in values.  Resets the BST to nil.
 - (void)resetWithValues:(NSArray *)values;
 
+/// Adds all remaining nodes to the tree, in random order.
+- (void)finishTreeRandomly;
+
 #pragma mark - Event handling
 
 - (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView;

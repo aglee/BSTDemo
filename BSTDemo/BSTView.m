@@ -74,6 +74,29 @@
 	self.needsDisplay = YES;
 }
 
+- (void)finishTreeRandomly {
+	// Gather all array node views that are not in the tree.
+	NSMutableArray *nodesToAdd = [NSMutableArray array];
+	for (ArrayNodeView *arrayNodeView in self.arrayNodeViews) {
+		if ([self _treeNodeViewCounterpartOf:arrayNodeView] == nil) {
+			[nodesToAdd addObject:arrayNodeView];
+		}
+	}
+
+	// Apply a Fisher-Yates shuffle.
+	NSUInteger count = nodesToAdd.count;
+	if (count > 1) {
+		for (NSUInteger i = count - 1; i > 0; --i) {
+			[nodesToAdd exchangeObjectAtIndex:i withObjectAtIndex:arc4random_uniform((int32_t)(i + 1))];
+		}
+	}
+
+	// Add them to the tree in the shuffled order.
+	for (ArrayNodeView *arrayNodeView in nodesToAdd) {
+		[self _addToTree:arrayNodeView];
+	}
+}
+
 #pragma mark - Event handling
 
 - (void)mouseEnteredArrayNodeView:(ArrayNodeView *)arrayNodeView {
