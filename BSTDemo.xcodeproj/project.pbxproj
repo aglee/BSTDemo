@@ -45,6 +45,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		736129B22168810900C92798 /* bst-screen-shot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bst-screen-shot.png"; sourceTree = "<group>"; };
+		736129B32168812300C92798 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		73C9284821668A90006980B8 /* BSTDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BSTDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		73C9284B21668A90006980B8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		73C9284C21668A90006980B8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -97,9 +99,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		736129B12168810900C92798 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				736129B22168810900C92798 /* bst-screen-shot.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		73C9283F21668A90006980B8 = {
 			isa = PBXGroup;
 			children = (
+				736129B32168812300C92798 /* README.md */,
+				736129B12168810900C92798 /* images */,
 				73C9284A21668A90006980B8 /* BSTDemo */,
 				73C9285E21668A94006980B8 /* BSTDemoTests */,
 				73C9286921668A94006980B8 /* BSTDemoUITests */,
