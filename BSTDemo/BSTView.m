@@ -53,17 +53,17 @@
 
 @implementation BSTView
 
-- (void)resetWithValues:(NSArray *)values {
+- (void)resetWithValues:(NSArray<NSNumber *> *)nodeValues {
 	self.rootNodeView = nil;
 	self.hoveredArrayNodeView = nil;
 	self.selectedTreeNodeView = nil;
 
 	// Create the array node views.
-	NSArray *sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
+	NSArray<NSNumber *> *sortedValues = [nodeValues sortedArrayUsingSelector:@selector(compare:)];
 	[self setSubviews:@[]];
 	self.arrayNodeViews = [NSMutableArray array];
 	for (int i = 0; i < sortedValues.count; i++) {
-		NSInteger value = ((NSNumber *)sortedValues[i]).integerValue;
+		NSInteger value = sortedValues[i].integerValue;
 		ArrayNodeView *nodeView = [[ArrayNodeView alloc] initWithValue:value sortIndex:i];
 		[self.arrayNodeViews addObject:nodeView];
 		[self addSubview:nodeView];
@@ -72,6 +72,14 @@
 	// Lay out all the nodes we just created.
 	[self _doLayout];
 	self.needsDisplay = YES;
+}
+
+- (void)resetWithPositiveIntegersThrough:(NSInteger)numValues {
+	NSMutableArray<NSNumber *> *nodeValues = [NSMutableArray array];
+	for (NSInteger i = 1; i <= numValues; i++) {
+		[nodeValues addObject:@(i)];
+	}
+	[self resetWithValues:nodeValues];
 }
 
 - (void)finishTreeRandomly {

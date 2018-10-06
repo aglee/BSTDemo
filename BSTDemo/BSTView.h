@@ -20,8 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// order.
 @interface BSTView : NSView
 
-/// Initializes the view using the numbers in values.  Resets the BST to nil.
-- (void)resetWithValues:(NSArray *)values;
+/// Clears any existing BST nodes and starts fresh using the numbers in nodeValues.
+- (void)resetWithValues:(NSArray<NSNumber *> *)nodeValues;
+
+/// Clears any existing BST nodes and starts fresh using the numbers 1, 2, ..., numValues.
+- (void)resetWithPositiveIntegersThrough:(NSInteger)numValues;
 
 /// Adds all remaining nodes to the tree, in random order.
 - (void)finishTreeRandomly;
