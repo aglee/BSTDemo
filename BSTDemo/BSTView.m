@@ -230,34 +230,49 @@
 	}
 
 	// If the hovered view is not in the tree, draw a line from it to its
-	// potential parent node view.
+	// potential parent node view.  If the hovered view *is* in the tree, draw
+	// a ring around its counterpart tree node view.
 	TreeNodeView *treeNodeView = [self _treeNodeViewCounterpartOf:self.hoveredArrayNodeView];
-	if (treeNodeView == nil && self.rootNodeView != nil) {
-		TreeNodeView *potentialParentNodeView = self.rootNodeView;
-		while (YES) {
-			if (self.hoveredArrayNodeView.value < potentialParentNodeView.value) {
-				if (potentialParentNodeView.left == nil) {
-					break;
-				} else {
-					potentialParentNodeView = potentialParentNodeView.left;
-				}
-			} else {
-				if (potentialParentNodeView.right == nil) {
-					break;
-				} else {
-					potentialParentNodeView = potentialParentNodeView.right;
-				}
-			}
+	if (treeNodeView == nil) {
+		TreeNodeView *potentialParentNodeView = [self _potentialParentOf:self.hoveredArrayNodeView];
+		if (potentialParentNodeView) {
+			[POTENTIAL_PARENT_LINE_COLOR set];
+			[self _drawLineFromBottomOf:potentialParentNodeView toTopOf:self.hoveredArrayNodeView];
 		}
-
-		[POTENTIAL_PARENT_LINE_COLOR set];
-		[self _drawLineFromBottomOf:potentialParentNodeView toTopOf:self.hoveredArrayNodeView];
+	} else {
+		if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
+			[RING_COLOR_CLICKABLE_NODE set];
+			[self _drawRingAroundView:treeNodeView];
+		}
 	}
 
 	// Draw a ring around the hovered view to indicate it is clickable.
 	if (self.selectedTreeNodeView == nil || treeNodeView != self.selectedTreeNodeView) {
 		[RING_COLOR_CLICKABLE_NODE set];
 		[self _drawRingAroundView:self.hoveredArrayNodeView];
+	}
+}
+
+- (TreeNodeView *)_potentialParentOf:(ArrayNodeView *)arrayNodeView {
+	if (self.rootNodeView == nil) {
+		return nil;
+	}
+
+	TreeNodeView *potentialParentNodeView = self.rootNodeView;
+	while (YES) {
+		if (arrayNodeView.value < potentialParentNodeView.value) {
+			if (potentialParentNodeView.left == nil) {
+				return potentialParentNodeView;
+			} else {
+				potentialParentNodeView = potentialParentNodeView.left;
+			}
+		} else {
+			if (potentialParentNodeView.right == nil) {
+				return potentialParentNodeView;
+			} else {
+				potentialParentNodeView = potentialParentNodeView.right;
+			}
+		}
 	}
 }
 
@@ -271,6 +286,7 @@
 	if (self.selectedTreeNodeView == nil || self.hoveredTreeNodeView != self.selectedTreeNodeView) {
 		[RING_COLOR_CLICKABLE_NODE set];
 		[self _drawRingAroundView:self.hoveredTreeNodeView];
+		[self _drawRingAroundView:self.arrayNodeViews[self.hoveredTreeNodeView.sortIndex]];
 	}
 }
 
