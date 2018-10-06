@@ -117,7 +117,7 @@
 	self.needsDisplay = YES;
 }
 
-- (void)handleClickOnArrayNodeView:(ArrayNodeView *)arrayNodeView {
+- (void)mouseClickedArrayNodeView:(ArrayNodeView *)arrayNodeView {
 	TreeNodeView *treeNodeView = [self _treeNodeViewCounterpartOf:arrayNodeView];
 	if (treeNodeView == nil) {
 		[self _addToTree:arrayNodeView];
@@ -137,7 +137,7 @@
 	self.needsDisplay = YES;
 }
 
-- (void)handleClickOnTreeNodeView:(TreeNodeView *)treeNodeView {
+- (void)mouseClickedTreeNodeView:(TreeNodeView *)treeNodeView {
 	self.selectedTreeNodeView = treeNodeView;
 	self.needsDisplay = YES;
 }

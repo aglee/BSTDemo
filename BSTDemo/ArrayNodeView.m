@@ -24,7 +24,7 @@
 - (void)mouseUp:(NSEvent *)event {
 	NSPoint mousePoint = [self convertPoint:event.locationInWindow fromView:nil];
 	if (NSPointInRect(mousePoint, self.bounds)) {
-		[self.owningView handleClickOnArrayNodeView:self];
+		[self.owningView mouseClickedArrayNodeView:self];
 	} else {
 		[super mouseUp:event];
 	}

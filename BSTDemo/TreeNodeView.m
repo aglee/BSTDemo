@@ -40,7 +40,7 @@
 - (void)mouseUp:(NSEvent *)event {
 	NSPoint mousePoint = [self convertPoint:event.locationInWindow fromView:nil];
 	if (NSPointInRect(mousePoint, self.bounds)) {
-		[self.owningView handleClickOnTreeNodeView:self];
+		[self.owningView mouseClickedTreeNodeView:self];
 	} else {
 		[super mouseUp:event];
 	}
